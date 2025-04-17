@@ -1,6 +1,5 @@
 from news_analysis_chain import analyze_news
 from news_sources import NewsAggregator
-from vector_db import NewsVectorDB
 
 stock = "TSLA"  # 股票代碼
 # vector_db = NewsVectorDB()

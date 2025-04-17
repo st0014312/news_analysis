@@ -21,14 +21,14 @@ The News Analysis Dashboard is a web application designed to analyze financial n
 1. Clone the repository:
    ```bash
    git clone <repository-url>
-   cd news_analysis
+   cd langchain
    ```
 2. Install dependencies:
    ```bash
    uv install
    ```
 3. Set up environment variables:
-   Create a `.env` file in the project root and add the following:
+   Create a `.env` file in the `langchain` folder and add the following:
    ```env
    OPENROUTER_API_KEY=<your_openrouter_api_key>
    OPENROUTER_BASE_URL=https://openrouter.ai/api/v1
@@ -36,23 +36,23 @@ The News Analysis Dashboard is a web application designed to analyze financial n
    TWITTER_BEARER=<your_twitter_bearer_token>
    ```
 4. Add your Firebase credentials:
-   Place your Firebase JSON credentials file in the project root and update the path in `news_analysis_chain.py`.
+   Place your Firebase JSON credentials file in the `langchain` folder and update the path in `news_analysis_chain.py`.
 
 ## Usage
 1. Start the Streamlit application:
    ```bash
-   streamlit run app.py
+   streamlit run langchain/app.py
    ```
 2. Open the application in your browser at `http://localhost:8501`.
 3. Use the search bar to find news articles and explore the analysis results.
 
 ## Project Structure
-- `app.py`: Streamlit application for the dashboard.
-- `news_analysis_chain.py`: Defines the analysis pipeline using LangChain.
-- `news_sources.py`: Fetches news articles from various sources (NewsAPI, RSS, Twitter).
-- `vector_db.py`: Handles vector database operations for semantic search.
-- `firebase_store.py`: Manages data storage in Firebase.
-- `main.py`: Example script for fetching and analyzing news articles.
+- `langchain/app.py`: Streamlit application for the dashboard.
+- `langchain/news_analysis_chain.py`: Defines the analysis pipeline using LangChain.
+- `langchain/news_sources.py`: Fetches news articles from various sources (NewsAPI, RSS, Twitter).
+- `langchain/vector_db.py`: Handles vector database operations for semantic search.
+- `langchain/firebase_store.py`: Manages data storage in Firebase.
+- `langchain/main.py`: Example script for fetching and analyzing news articles.
 
 ## Dependencies
 Key dependencies include:

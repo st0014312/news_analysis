@@ -8,7 +8,6 @@ import hashlib
 
 from firebase_store import FirebaseClient
 from news import News
-from vector_db import NewsVectorDB
 
 load_dotenv()
 # store = NewsVectorDB()
