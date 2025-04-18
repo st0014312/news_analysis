@@ -1,76 +1,168 @@
-# News Analysis Dashboard
+# Financial News Analysis System
 
-## Overview
-The News Analysis Dashboard is a web application designed to analyze financial news articles using semantic search and machine learning. It provides insights such as sentiment analysis, key entities, and topics discussed in the articles. The application is built using Python and integrates tools like LangChain, Firebase, and Streamlit.
+A production-ready Flutter mobile application integrated with a Python/LangChain news analysis backend.
 
-## Features
-- **Semantic Search**: Search for news articles using keywords or phrases.
-- **Sentiment Analysis**: Analyze the sentiment of news articles (positive, negative, or neutral).
-- **Entity Extraction**: Identify key entities mentioned in the articles.
-- **Topic Categorization**: Classify articles into topics like M&A, Earnings, Regulations, etc.
-- **Interactive Dashboard**: Visualize and explore results in a user-friendly interface.
+## Project Overview
 
-## Installation
+This project consists of two main components:
 
-### Prerequisites
-- Python 3.12 or higher
-- Firebase account and credentials
-- API keys for OpenRouter, NewsAPI, and Twitter
+1. **LangChain Backend**: A Python-based backend that fetches, processes, and analyzes financial news using LangChain and various NLP techniques.
+2. **Flutter Mobile App**: A cross-platform mobile application that displays the analyzed news with advanced features like sentiment analysis, entity recognition, and personalized alerts.
 
-### Steps
-1. Clone the repository:
-   ```bash
-   git clone <repository-url>
-   cd langchain
-   ```
-2. Install dependencies:
-   ```bash
-   uv install
-   ```
-3. Set up environment variables:
-   Create a `.env` file in the `langchain` folder and add the following:
-   ```env
-   OPENROUTER_API_KEY=<your_openrouter_api_key>
-   OPENROUTER_BASE_URL=https://openrouter.ai/api/v1
-   NEWS_API_KEY=<your_news_api_key>
-   TWITTER_BEARER=<your_twitter_bearer_token>
-   ```
-4. Add your Firebase credentials:
-   Place your Firebase JSON credentials file in the `langchain` folder and update the path in `news_analysis_chain.py`.
+## System Architecture
 
-## Usage
-1. Start the Streamlit application:
-   ```bash
-   streamlit run langchain/app.py
-   ```
-2. Open the application in your browser at `http://localhost:8501`.
-3. Use the search bar to find news articles and explore the analysis results.
+The system follows a client-server architecture with the following components:
+
+- **News Analysis Backend**: Fetches news from various sources, processes them using LangChain, and stores the results in Firestore.
+- **API Layer**: RESTful API with Protobuf payloads for efficient communication between the backend and mobile app.
+- **Flutter Mobile App**: User-facing application with features like news feed, detail view, and subscription management.
+
+For more details, see the [ARCHITECTURE.md](ARCHITECTURE.md) file.
+
+## Backend Features
+
+- **News Ingestion**: Fetches news from NewsAPI, RSS feeds, and Twitter with URL deduplication.
+- **Content Processing**: Implements chunking strategy for long-form content.
+- **Sentiment Analysis**: Provides compound scores and categorical classification.
+- **Entity Recognition**: Identifies stock tickers, companies, and market sectors.
+- **Context-aware Summarization**: Preserves key financial metrics.
+- **Causal Relationship Extraction**: Identifies relationships between market events.
+- **Vector Database**: Enables semantic search for related articles.
+- **Firestore Integration**: Stores structured data for efficient retrieval.
+
+## Mobile App Features
+
+- **News Feed Interface**: Infinite-scroll list with filtering and sorting options.
+- **Detail View**: Progressive loading of content with semantic highlighting.
+- **Subscription System**: Premium features with secure payment integration.
+- **Offline Mode**: Hive-based local caching for offline access.
+- **Push Notifications**: Real-time alerts for important news.
+- **Portfolio Dashboard**: Visualizations of news impact on stocks.
 
 ## Project Structure
-- `langchain/app.py`: Streamlit application for the dashboard.
-- `langchain/news_analysis_chain.py`: Defines the analysis pipeline using LangChain.
-- `langchain/news_sources.py`: Fetches news articles from various sources (NewsAPI, RSS, Twitter).
-- `langchain/vector_db.py`: Handles vector database operations for semantic search.
-- `langchain/firebase_store.py`: Manages data storage in Firebase.
-- `langchain/main.py`: Example script for fetching and analyzing news articles.
 
-## Dependencies
-Key dependencies include:
-- `langchain`
-- `firebase-admin`
-- `streamlit`
-- `sentence-transformers`
-- `newspaper3k`
+```
+.
+├── ARCHITECTURE.md           # Detailed system architecture
+├── README.md                 # This file
+├── langchain/                # Backend code
+│   ├── api.py                # API layer
+│   ├── firebase_store.py     # Firestore integration
+│   ├── main.py               # Entry point
+│   ├── news.py               # News data model
+│   ├── news_analysis_chain.py # LangChain processing
+│   ├── news_sources.py       # News aggregation
+│   └── vector_db.py          # Vector database
+└── flutter_app/              # Mobile application
+    ├── assets/               # App assets
+    └── lib/                  # Dart code
+        ├── app/              # Application layer
+        │   ├── blocs/        # BLoC state management
+        │   ├── routes/       # Routing
+        │   ├── screens/      # UI screens
+        │   ├── theme/        # App theme
+        │   └── app.dart      # App entry point
+        ├── core/             # Core functionality
+        │   ├── config/       # Configuration
+        │   ├── services/     # Services
+        │   └── utils/        # Utilities
+        └── main.dart         # Entry point
+```
 
-Refer to `pyproject.toml` for the full list of dependencies.
+## Getting Started
+
+### Prerequisites
+
+- Python 3.8+
+- Flutter 3.0+
+- Firebase account
+- NewsAPI key
+- OpenRouter API key (or other LLM provider)
+
+### Backend Setup
+
+1. Navigate to the backend directory:
+   ```
+   cd langchain
+   ```
+
+2. Install dependencies:
+   ```
+   pip install -r requirements.txt
+   ```
+
+3. Set up environment variables:
+   ```
+   cp .env.example .env
+   ```
+   Then edit the `.env` file with your API keys.
+
+4. Run the backend:
+   ```
+   python main.py
+   ```
+
+### Flutter App Setup
+
+1. Navigate to the Flutter app directory:
+   ```
+   cd flutter_app
+   ```
+
+2. Install dependencies:
+   ```
+   flutter pub get
+   ```
+
+3. Run the app:
+   ```
+   flutter run
+   ```
+
+## API Documentation
+
+The API follows RESTful principles with the following main endpoints:
+
+- `GET /api/news`: Get a paginated list of news articles with filtering options.
+- `GET /api/news/{id}`: Get detailed information about a specific news article.
+- `GET /api/subscriptions`: Get available subscription plans.
+- `POST /api/subscriptions`: Subscribe to a plan.
+
+For more details, see the API documentation in the [ARCHITECTURE.md](ARCHITECTURE.md) file.
+
+## Implementation Roadmap
+
+1. **Phase 1**: Core Backend Development
+   - Enhance news ingestion with URL deduplication
+   - Implement chunking strategy for long-form content
+   - Improve sentiment analysis with compound scoring
+   - Develop entity recognition focusing on financial entities
+   - Create Firestore database schema
+
+2. **Phase 2**: API Development
+   - Design and implement RESTful API with Protobuf
+   - Set up authentication flow with JWT
+   - Implement WebSocket for real-time updates
+   - Create caching layer for frequent queries
+
+3. **Phase 3**: Flutter App Development
+   - Set up project structure with BLoC pattern
+   - Implement news feed interface with filtering
+   - Create detail view with progressive loading
+   - Develop offline mode with Hive-based caching
+
+4. **Phase 4**: Premium Features
+   - Implement Stripe payment integration
+   - Set up push notification system
+   - Create portfolio dashboard
+   - Develop batch analysis for watchlists
+
+5. **Phase 5**: Quality Assurance
+   - Implement performance optimizations
+   - Set up security measures
+   - Ensure GDPR compliance
+   - Create comprehensive test suite
 
 ## License
-This project is licensed under the MIT License. See the LICENSE file for details.
 
-## Acknowledgments
-- [LangChain](https://langchain.com/)
-- [Streamlit](https://streamlit.io/)
-- [Firebase](https://firebase.google.com/)
-
----
-Feel free to contribute to this project by submitting issues or pull requests.
+This project is licensed under the MIT License - see the LICENSE file for details.

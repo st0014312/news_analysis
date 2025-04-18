@@ -1,0 +1,41 @@
+# Core dependencies
+langchain>=0.1.0
+langchain-core>=0.1.0
+langchain-openai>=0.0.5
+langchain-huggingface>=0.0.1
+langchain-chroma>=0.0.1
+langchain-community>=0.0.1
+
+# LLM providers
+openai>=1.0.0
+openrouter>=0.5.0
+
+# Vector database
+chromadb>=0.4.0
+
+# Embeddings
+sentence-transformers>=2.2.0
+
+# News fetching
+requests>=2.31.0
+feedparser>=6.0.0
+tweepy>=4.14.0
+newspaper3k>=0.2.8
+
+# Firebase
+firebase-admin>=6.2.0
+
+# Web server
+fastapi>=0.104.0
+uvicorn>=0.23.0
+protobuf>=4.24.0
+websockets>=11.0.0
+pyjwt>=2.8.0
+python-multipart>=0.0.6
+
+# Utilities
+python-dotenv>=1.0.0
+numpy>=1.24.0
+pandas>=2.0.0
+tqdm>=4.66.0
+pydantic>=2.0.0
