@@ -212,6 +212,10 @@ class _HomeScreenState extends State<HomeScreen>
 
   @override
   Widget build(BuildContext context) {
+    // Check if user is authenticated
+    final authState = context.watch<AuthBloc>().state;
+    final isAuthenticated = authState is AuthAuthenticated;
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Financial News'),
@@ -228,11 +232,15 @@ class _HomeScreenState extends State<HomeScreen>
             icon: const Icon(Icons.filter_list),
             onPressed: _showFilterDialog,
           ),
-          // Profile button
+          // Profile/Login button
           IconButton(
-            icon: const Icon(Icons.person),
+            icon: Icon(isAuthenticated ? Icons.person : Icons.login),
             onPressed: () {
-              context.pushNamed(AppRouter.profile);
+              if (isAuthenticated) {
+                context.pushNamed(AppRouter.profile);
+              } else {
+                context.pushNamed(AppRouter.login);
+              }
             },
           ),
         ],
@@ -302,13 +310,21 @@ class _HomeScreenState extends State<HomeScreen>
           }
         },
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          // Show subscription options
-          context.pushNamed(AppRouter.subscription);
-        },
-        child: const Icon(Icons.star),
-      ),
+      floatingActionButton: isAuthenticated
+          ? FloatingActionButton(
+              onPressed: () {
+                // Show subscription options
+                context.pushNamed(AppRouter.subscription);
+              },
+              child: const Icon(Icons.star),
+            )
+          : FloatingActionButton.extended(
+              onPressed: () {
+                context.pushNamed(AppRouter.login);
+              },
+              icon: const Icon(Icons.login),
+              label: const Text('Login for Premium'),
+            ),
     );
   }
 

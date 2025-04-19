@@ -71,7 +71,7 @@ class AnalyticsService {
   /// Log a custom event
   Future<void> logEvent({
     required String name,
-    Map<String, dynamic>? parameters,
+    Map<String, Object>? parameters,
   }) async {
     try {
       await _analytics.logEvent(
@@ -146,7 +146,7 @@ class AnalyticsService {
           'article_id': articleId,
           'title': title,
           'source': source,
-          'category': category,
+          if (category != null) 'category': category,
         },
       );
     } catch (e) {
@@ -195,7 +195,7 @@ class AnalyticsService {
     try {
       await logEvent(
         name: AnalyticsEvents.filterNews,
-        parameters: filters,
+        parameters: filters.cast<String, Object>(),
       );
     } catch (e) {
       AppLogger.e('Error logging filter', error: e);
@@ -272,7 +272,7 @@ class AnalyticsService {
         parameters: {
           'error_code': errorCode,
           'message': message,
-          'stack_trace': stackTrace?.toString(),
+          'stack_trace': stackTrace?.toString() ?? '',
         },
       );
     } catch (e) {

@@ -141,9 +141,17 @@ class AppRouter {
       // Check if the path is the splash screen
       final isSplashRoute = currentPath == splashPath;
 
+      // Check if the path is the home screen or news detail screen (publicly accessible)
+      final isPublicRoute =
+          currentPath == homePath || currentPath.startsWith('/news/');
+
+      // Protected routes that require authentication
+      final isProtectedRoute = currentPath == subscriptionPath ||
+          currentPath == profilePath ||
+          currentPath == settingsPath;
+
       // Get onboarding status
-      final cacheService =
-          serviceLocator.get(instanceName: 'cacheService') as CacheService;
+      final cacheService = serviceLocator<CacheService>();
       final isOnboardingCompleted = cacheService.isOnboardingCompleted();
 
       // If the user is on the splash screen, let them proceed
@@ -165,10 +173,7 @@ class AppRouter {
 
       // If the user is not authenticated and trying to access a protected route,
       // redirect to login
-      if (!isAuthenticated &&
-          !isAuthRoute &&
-          !isOnboardingRoute &&
-          !isSplashRoute) {
+      if (!isAuthenticated && isProtectedRoute) {
         return loginPath;
       }
 

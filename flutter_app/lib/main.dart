@@ -1,3 +1,4 @@
+import 'package:financial_news_analyzer/firebase_options.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -20,7 +21,9 @@ void main() async {
 
   try {
     // Initialize Firebase
-    await Firebase.initializeApp();
+    await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
     AppLogger.log.i('Firebase initialized');
 
     // Initialize Hive for local storage
@@ -29,6 +32,10 @@ void main() async {
 
     // Register Hive adapters
     // registerAdapters();
+
+    // Set up app configuration
+    AppConfig.initialize(flavor: 'development');
+    AppLogger.log.i('App configuration initialized');
 
     // Initialize SharedPreferences
     final sharedPreferences = await SharedPreferences.getInstance();
@@ -44,10 +51,6 @@ void main() async {
       secureStorage: secureStorage,
     );
     AppLogger.log.i('Service locator initialized');
-
-    // Set up app configuration
-    await AppConfig.initialize(flavor: 'development');
-    AppLogger.log.i('App configuration initialized');
 
     // Run the app
     runApp(const FinancialNewsApp());

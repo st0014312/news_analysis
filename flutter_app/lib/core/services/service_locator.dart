@@ -9,6 +9,10 @@ import 'auth_service.dart';
 import 'cache_service.dart';
 import 'notification_service.dart';
 import 'analytics_service.dart';
+import '../../app/blocs/auth/auth_bloc.dart';
+import '../../app/blocs/news/news_bloc.dart';
+import '../../app/blocs/subscription/subscription_bloc.dart';
+import '../../app/blocs/theme/theme_bloc.dart';
 
 /// Global service locator instance
 final GetIt serviceLocator = GetIt.instance;
@@ -93,12 +97,31 @@ void _registerRepositories() {
 
 /// Register BLoCs
 void _registerBlocs() {
-  // Register BLoCs here
-  // Note: BLoCs are typically registered as factories, not singletons
-  // Example:
-  // serviceLocator.registerFactory<NewsBloc>(
-  //   () => NewsBloc(
-  //     newsRepository: serviceLocator<NewsRepository>(),
-  //   ),
+  // Register AuthBloc
+  serviceLocator.registerFactory<AuthBloc>(
+    () => AuthBloc(
+      authService: serviceLocator<AuthService>(),
+      cacheService: serviceLocator<CacheService>(),
+    ),
+  );
+
+  // Register NewsBloc
+  serviceLocator.registerFactory<NewsBloc>(
+    () => NewsBloc(
+      apiService: serviceLocator<ApiService>(),
+      cacheService: serviceLocator<CacheService>(),
+    ),
+  );
+
+  // Register SubscriptionBloc
+  // serviceLocator.registerFactory<SubscriptionBloc>(
+  //   () => SubscriptionBloc(),
   // );
+
+  // Register ThemeBloc
+  serviceLocator.registerFactory<ThemeBloc>(
+    () => ThemeBloc(
+      cacheService: serviceLocator<CacheService>(),
+    ),
+  );
 }

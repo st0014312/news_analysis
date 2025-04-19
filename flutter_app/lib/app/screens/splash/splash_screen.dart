@@ -94,7 +94,7 @@ class _SplashScreenState extends State<SplashScreen>
         if (state is AuthAuthenticated) {
           context.goNamed(AppRouter.home);
         } else if (state is AuthUnauthenticated) {
-          context.goNamed(AppRouter.login);
+          context.goNamed(AppRouter.home); // Changed from login to home
         } else if (state is AuthError) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
@@ -102,7 +102,7 @@ class _SplashScreenState extends State<SplashScreen>
               backgroundColor: AppTheme.errorColor,
             ),
           );
-          context.goNamed(AppRouter.login);
+          context.goNamed(AppRouter.home); // Changed from login to home
         }
       },
       child: Scaffold(

@@ -49,7 +49,7 @@ class NotificationService {
         requestAlertPermission: true,
         requestBadgePermission: true,
         requestSoundPermission: true,
-        onDidReceiveLocalNotification: _onDidReceiveLocalNotification,
+        // onDidReceiveLocalNotification: _onDidReceiveLocalNotification,
       );
       final initializationSettings = InitializationSettings(
         android: initializationSettingsAndroid,

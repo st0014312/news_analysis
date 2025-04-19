@@ -27,7 +27,7 @@ class AppConfig {
   static String? _apiKey;
 
   /// Initialize the app configuration based on the flavor
-  static Future<void> initialize({required String flavor}) async {
+  static void initialize({required String flavor}) {
     switch (flavor) {
       case 'development':
         _environment = Environment.development;

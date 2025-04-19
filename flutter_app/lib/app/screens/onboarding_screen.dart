@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import '../routes/app_router.dart';
+import '../../core/services/service_locator.dart';
+import '../../core/services/cache_service.dart';
 
 class OnboardingScreen extends StatelessWidget {
   const OnboardingScreen({Key? key}) : super(key: key);
@@ -59,7 +63,12 @@ class OnboardingScreen extends StatelessWidget {
         if (isLastPage)
           ElevatedButton(
             onPressed: () {
-              Navigator.pushReplacementNamed(context, '/home');
+              // Mark onboarding as completed
+              final cacheService = serviceLocator<CacheService>();
+              cacheService.saveOnboardingCompleted(true);
+
+              // Navigate to home screen
+              context.goNamed(AppRouter.home);
             },
             child: const Text('Get Started'),
           ),
